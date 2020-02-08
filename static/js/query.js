@@ -5,10 +5,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
-var marker = L.marker([51.5, -0.09]).addTo(map);
+
 search.onsubmit = async (e) => {
     e.preventDefault();
     console.log("test")
+    
     let form = new FormData(search);
     form.append("bounds", map.getBounds().toBBoxString());
     for (let entry of form.entries()) {
@@ -19,10 +20,36 @@ search.onsubmit = async (e) => {
       body: form
     });
 
-    // let result = await response.json();
-
-    // alert(result.message);
+    let mapData = await response.json();
+    
+    for(let i=0; i<mapData.length; i++){
+        
+        let mapItem = mapData[i];
+        let logo = "";
+        if(mapItem.Vendor == "craigslist"){
+            logo = "/static/img/craigslist_logo.png";
+        }
+        /*
+        let myrep = await fetch('/static/pages/popup.html');
+        let elem = "";
+        if(myrep.ok){
+            elem = await myrep.text();
+        }
+        
+        elem.getElementById("Vendor").src = logo;
+        elem.getElementById("Title").innerHTML = mapItem.Title;
+        elem.getElementById("Price").innerHTML = mapItem.Price;
+        elem.getElementById("Posted").innerHTML = mapItem.Posted;
+        */
+        let listing = L.popup()
+        .setLatLng([mapItem.Lat, mapItem.Long])
+        //.setContent(elem)
+        .openOn(map);
+        
+    }
   };
+
+  
 
 document.getElementsByClassName("currency").onblur =function (){
 
