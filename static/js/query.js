@@ -11,7 +11,7 @@ search.onsubmit = async (e) => {
     let form = new FormData(search);
     form.append("Lat", map.getCenter().lat);
     form.append("Long", map.getCenter().lng);
-    let response = await fetch(window.location.href + '/api/search', {
+    let response = await fetch(window.location.origin + '/api/search', {
       method: 'POST',
       body: form
     });

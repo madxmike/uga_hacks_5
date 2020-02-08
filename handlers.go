@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/pkg/errors"
 	"html/template"
@@ -88,6 +89,26 @@ func (h *SearchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			options: *opts,
 			cities:  FindAllCitiesWithinFrom(h.craiglistCities, opts.Miles, opts.Lat, opts.Long),
 		})
+	}
+
+	results := make([]SearchResult, 0)
+	for _, harvester := range harvesters {
+		harvest, err := harvester.Harvest()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		results = append(results, harvest...)
+	}
+	b, err := json.Marshal(results)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	_, err = w.Write(b)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
