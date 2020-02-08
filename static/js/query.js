@@ -19,14 +19,9 @@ search.onsubmit = async (e) => {
       body: form
     });
 
-    // let result = await response.json();
+    let result = await response.json();
 
-
-    alert(result.message);
-  };
-
-
-    // alert(result.message);
+     alert(result.message);
   };
 
 document.getElementsByClassName("currency").onblur =function (){
@@ -41,4 +36,3 @@ document.getElementsByClassName("currency").onblur =function (){
     document.getElementById("number").value = this.value.replace(/,/g, "")
 
 }
-

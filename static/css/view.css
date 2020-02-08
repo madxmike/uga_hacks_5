@@ -11,8 +11,6 @@
 	 }
 
   
-	  
-=======
 #mapid {
 	width: 100%;
 	height: 100%;
@@ -32,4 +30,4 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
 	-moz-appearance:textfield;
 }
->>>>>>> 104ba1c644230db3f62c79d1695ebbd9926cc3a6
+
