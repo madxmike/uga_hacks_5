@@ -32,7 +32,7 @@ search.onsubmit = async (e) => {
     });
 
     let mapData = await response.json();
-    
+
     for(let i=0; i<mapData.length; i++){
         
         let mapItem = mapData[i];
@@ -53,9 +53,7 @@ search.onsubmit = async (e) => {
         elem.getElementById("Posted").innerHTML = mapItem.Posted;
         */
         let listing = L.popup()
-        .setLatLng([mapItem.Lat, mapItem.Long])
-        //.setContent(elem)
-        .openOn(map);
+        .setLatLng([mapItem.Lat, mapItem.Long]).addTo(map);
         
     }
 
