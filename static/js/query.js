@@ -30,9 +30,9 @@ search.onsubmit = async (e) => {
         },
         body: JSON.stringify(Object.fromEntries(form))
     });
-    
+
     let mapData = await response.json();
-   
+
     for(let i=0; i<mapData.length; i++){
         
         let mapItem = mapData[i];
@@ -57,6 +57,9 @@ search.onsubmit = async (e) => {
         
     }
 
+    let result = await response.json();
+
+    console.log(result)
   };
 
   

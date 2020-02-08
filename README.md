@@ -1,2 +1,1 @@
-# uga_hacks_5
-Project for UGA Hacks
+![alt text](https://github.com/lemonman96/uga_hacks_5/static/img/logo.png "Logo Title Text 1")

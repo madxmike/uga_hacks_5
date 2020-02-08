@@ -100,6 +100,9 @@ func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
 				log.Println(err)
 				continue
 			}
+			if got.Location == nil {
+				continue
+			}
 			results = append(results, SearchResult{
 				Vendor:    "Craigslist",
 				Title:     got.Title,
