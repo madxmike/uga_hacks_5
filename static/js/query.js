@@ -1,4 +1,7 @@
-let map = L.map('mapid').setView([33.7490, -84.3880], 11);
+let map = L.map('mapid', {
+    minZoom: 11,
+    maxZoom: 15
+}).setView([33.7490, -84.3880], 11);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -34,7 +37,12 @@ search.onsubmit = async (e) => {
 
     let mapData = await response.json();
     
-    markers.clearLayers(); 
+    markers.clearLayers();
+    let myrep = await fetch('/static/pages/popup.html');
+        let popup_text = "";
+        if(myrep.ok){
+            popup_text = await myrep.text();
+        } 
     for(let i=0; i<mapData.length; i++){
         
         let mapItem = mapData[i];
@@ -44,11 +52,7 @@ search.onsubmit = async (e) => {
             logo = "/static/img/craigslist_logo.png";
         }
         
-        let myrep = await fetch('/static/pages/popup.html');
-        let popup_text = "";
-        if(myrep.ok){
-            popup_text = await myrep.text();
-        }
+        
         
        let domparser = new DOMParser();
        let elem = domparser.parseFromString(popup_text,'text/html');
@@ -56,12 +60,15 @@ search.onsubmit = async (e) => {
         elem.getElementById("Title").innerHTML = mapItem.title;
         elem.getElementById("Price").innerHTML = mapItem.price;
         elem.getElementById("Posted").innerHTML = mapItem.posted;
-        
+        //elem.getElementById("Link").href = mapItem.link;
+        //elem.getElementById("Description").innerHTML = mapItem.description;
         
         let loc = L.latLng(mapItem.latitude, mapItem.longitude);
         let listing = L.marker()
         .bindPopup(elem.getElementById("body"))
-        .setLatLng(loc).addTo(markers);
+        .setLatLng(loc)
+        .addTo(markers);
+
     }
     markers.addTo(map);
     document.getElementById("spin").style.display = "none";

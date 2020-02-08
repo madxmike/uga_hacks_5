@@ -104,12 +104,14 @@ func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
 				continue
 			}
 			results = append(results, SearchResult{
-				Vendor:    "Craigslist",
-				Title:     got.Title,
-				Posted:    got.PostedAt,
-				Price:     strconv.Itoa(got.Price),
-				Latitude:  got.Location.Lat,
-				Longitude: got.Location.Lng,
+				Vendor:      "Craigslist",
+				Title:       got.Title,
+				Posted:      got.PostedAt,
+				Price:       strconv.Itoa(got.Price),
+				Latitude:    got.Location.Lat,
+				Longitude:   got.Location.Lng,
+				Description: got.Description,
+				URL:         got.URL,
 			})
 		}
 	}
