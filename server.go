@@ -1,9 +1,10 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"net/http"
 )
 
 func StartServer(port string) {
@@ -14,6 +15,9 @@ func StartServer(port string) {
 		r.Get("/", ServeTemplate("index"))
 		r.Route("/view", func(r chi.Router) {
 			r.Get("/", ServeTemplate("view"))
+		})
+		r.Route("/about", func(r chi.Router) {
+			r.Get("/", ServeTemplate("about"))
 		})
 		r.Route("/api", func(r chi.Router) {
 			cities, err := LoadAllCities()
