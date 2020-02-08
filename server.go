@@ -15,6 +15,14 @@ func StartServer(port string) {
 		r.Route("/view", func(r chi.Router) {
 			r.Get("/", ServeTemplate("view"))
 		})
+		r.Route("/api", func(r chi.Router) {
+			cities, err := LoadAllCities()
+			if err != nil {
+				panic(err)
+			}
+			r.Method("POST", "/search", &SearchHandler{craiglistCities: cities})
+		})
+
 	})
 	r.Mount("/static/", ServeStatic("/static/"))
 
