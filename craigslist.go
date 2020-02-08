@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/madxmike/go-craigslist"
 	"github.com/pkg/errors"
-	"github.com/sosedoff/go-craigslist"
-	"github.com/umahmood/haversine"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -43,20 +43,25 @@ func LoadAllCities() ([]CraigslistCity, error) {
 	return cities, nil
 }
 
-func FindAllCitiesWithinFrom(cities []CraigslistCity, miles float64, lat float64, long float64) []CraigslistCity {
+func FindAllCitiesWithin(cities []CraigslistCity, bounds []float64) []CraigslistCity {
+	swLong := bounds[0]
+	swLat := bounds[1]
+	neLong := bounds[2]
+	neLat := bounds[3]
 	within := make([]CraigslistCity, 0, cap(cities))
 	for _, city := range cities {
-		cityPoint := haversine.Coord{
-			Lat: city.Latitude,
-			Lon: city.Longitude,
+		eastBound := city.Longitude < neLong
+		westBound := city.Longitude > swLong
+
+		var inLong bool
+		if neLong < swLong {
+			inLong = eastBound || westBound
+		} else {
+			inLong = eastBound && westBound
 		}
 
-		fromPoint := haversine.Coord{
-			Lat: lat,
-			Lon: long,
-		}
-		milesFrom, _ := haversine.Distance(cityPoint, fromPoint)
-		if milesFrom <= miles {
+		inLat := city.Latitude > swLat && city.Latitude < neLat
+		if inLat && inLong {
 			within = append(within, city)
 		}
 	}
@@ -69,28 +74,43 @@ type CraigslistHarvester struct {
 }
 
 func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
+	min, err := strconv.Atoi(h.options.MinPrice)
+	if err != nil {
+		return nil, err
+	}
+	max, err := strconv.Atoi(h.options.MaxPrice)
+	if err != nil {
+		return nil, err
+	}
 	results := make([]SearchResult, 0)
 	opts := craigslist.SearchOptions{
+		Category: "sss",
 		Query:    h.options.Query,
-		MinPrice: h.options.MinPrice,
-		MaxPrice: h.options.MaxPrice,
+		MinPrice: min,
+		MaxPrice: max,
 	}
 	for _, city := range h.cities {
-		result, err := craigslist.Search(city.Region, opts)
+		result, err := craigslist.Search(city.Hostname, opts)
 		if err != nil {
 			return results, errors.Wrap(err, "could not load craigslist data")
 		}
 		for _, listing := range result.Listings {
+			got, err := craigslist.GetListing(listing.URL)
+			if err != nil {
+				log.Println(err)
+				continue
+			}
 			results = append(results, SearchResult{
 				Vendor:    "Craigslist",
-				Title:     listing.Title,
-				Posted:    listing.PostedAt,
-				Price:     strconv.Itoa(listing.Price),
-				Latitude:  listing.Location.Lat,
-				Longitude: listing.Location.Lng,
+				Title:     got.Title,
+				Posted:    got.PostedAt,
+				Price:     strconv.Itoa(got.Price),
+				Latitude:  got.Location.Lat,
+				Longitude: got.Location.Lng,
 			})
 		}
 	}
+	log.Println(len(results))
 
 	return results, nil
 }

@@ -10,18 +10,29 @@ search.onsubmit = async (e) => {
     e.preventDefault();
     console.log("test")
     let form = new FormData(search);
-    form.append("bounds", map.getBounds().toBBoxString());
-    for (let entry of form.entries()) {
-        console.log(entry)
+    let priceMin = form.get("price_min")
+    let priceMax = form.get("price_max")
+    console.log(priceMin)
+    console.log(priceMax)
+    if (priceMin === "") {
+        form.set("price_min", "0")
     }
+    if (priceMax === "") {
+        form.set("price_max", "1000")
+    }
+    form.append("bounds", map.getBounds().toBBoxString());
+    console.log(JSON.stringify(Object.fromEntries(form)))
     let response = await fetch(window.location.origin + '/api/search', {
       method: 'POST',
-      body: form
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(Object.fromEntries(form))
     });
 
-    // let result = await response.json();
+    let result = await response.json();
 
-    // alert(result.message);
+    console.log(result)
   };
 
 document.getElementsByClassName("currency").onblur =function (){

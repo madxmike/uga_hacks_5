@@ -3,8 +3,10 @@ package main
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
+	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -13,13 +15,11 @@ type SearchHandler struct {
 }
 
 type searchOptions struct {
-	UseCraigslist bool
-	Query         string
-	Lat           float64
-	Long          float64
-	Miles         float64
-	MinPrice      int
-	MaxPrice      int
+	UseCraigslist string `json:"use_craigslist"`
+	Query         string `json:"query"`
+	Bounds        string `json:"bounds"`
+	MinPrice      string `json:"price_min"`
+	MaxPrice      string `json:"price_max"`
 }
 
 type SearchResult struct {
@@ -34,16 +34,23 @@ type SearchResult struct {
 func (h *SearchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	opts, err := h.parseForm(r)
 	if err != nil {
+		log.Println(err)
 		http.Error(w, err.Error(), http.StatusNotAcceptable)
 		return
 	}
 
 	harvesters := make([]Harvester, 0)
 
-	if opts.UseCraigslist {
+	log.Println(opts.UseCraigslist)
+	if opts.UseCraigslist == "on" {
+		bounds, err := h.parseBounds(opts.Bounds)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotAcceptable)
+			return
+		}
 		harvesters = append(harvesters, &CraigslistHarvester{
-			options: *opts,
-			cities:  FindAllCitiesWithinFrom(h.craiglistCities, opts.Miles, opts.Lat, opts.Long),
+			options: opts,
+			cities:  FindAllCitiesWithin(h.craiglistCities, bounds),
 		})
 	}
 
@@ -68,43 +75,25 @@ func (h *SearchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *SearchHandler) parseForm(r *http.Request) (*searchOptions, error) {
-	err := r.ParseForm()
+func (h *SearchHandler) parseForm(r *http.Request) (searchOptions, error) {
+	var searchOptions searchOptions
+	err := json.NewDecoder(r.Body).Decode(&searchOptions)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not parse search form")
+		return searchOptions, errors.Wrap(err, "could not parse form")
 	}
+	log.Printf("%+v\n", searchOptions)
+	return searchOptions, nil
+}
 
-	minPrice, err := strconv.Atoi(r.FormValue("price_min"))
-	if err != nil {
-		return nil, errors.Wrap(err, "could not parse price_min")
+func (h *SearchHandler) parseBounds(bounds string) ([]float64, error) {
+	parsedBounds := make([]float64, 0, 4)
+	split := strings.Split(bounds, ",")
+	for _, bound := range split {
+		parsed, err := strconv.ParseFloat(bound, 64)
+		if err != nil {
+			return nil, errors.Wrap(err, "could not parse bounds")
+		}
+		parsedBounds = append(parsedBounds, parsed)
 	}
-	maxPrice, err := strconv.Atoi(r.FormValue("price_max"))
-	if err != nil {
-		return nil, errors.Wrap(err, "could not parse price_max")
-	}
-	miles, err := strconv.Atoi(r.FormValue("miles"))
-	if err != nil {
-		return nil, errors.Wrap(err, "could not parse miles")
-	}
-	lat, err := strconv.Atoi(r.FormValue("lat"))
-	if err != nil {
-		return nil, errors.Wrap(err, "could not parse lat")
-	}
-	long, err := strconv.Atoi(r.FormValue("long"))
-	if err != nil {
-		return nil, errors.Wrap(err, "could not parse long")
-	}
-	useCraigslist, err := strconv.ParseBool(r.FormValue("use_craigslist"))
-	if err != nil {
-		return nil, errors.Wrap(err, "could not parse use_craigslist")
-	}
-	return &searchOptions{
-		UseCraigslist: useCraigslist,
-		Query:         r.FormValue("query"),
-		Lat:           float64(lat),
-		Long:          float64(long),
-		Miles:         float64(miles),
-		MinPrice:      minPrice,
-		MaxPrice:      maxPrice,
-	}, nil
+	return parsedBounds, nil
 }
