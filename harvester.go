@@ -1,9 +1,5 @@
 package main
 
-import (
-	"io"
-)
-
 type Harvester interface {
-	Harvest(writer io.Writer) error
+	Harvest() ([]SearchResult, error)
 }

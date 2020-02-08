@@ -133,10 +133,10 @@ func (h *SearchHandler) parseForm(r *http.Request) (*searchOptions, error) {
 }
 
 type SearchResult struct {
-	Vendor    string    `json:"vendor"`
-	Title     string    `json:"title"`
-	Posted    time.Time `json:"posted"`
-	Price     string    `json:"price"`
-	Latitude  string    `json:"latitude"`
-	Longitude string    `json:"longitude"`
+	Vendor    string     `json:"vendor"`
+	Title     string     `json:"title"`
+	Posted    *time.Time `json:"posted"`
+	Price     string     `json:"price"`
+	Latitude  float64    `json:"latitude"`
+	Longitude float64    `json:"longitude"`
 }

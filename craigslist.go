@@ -3,8 +3,10 @@ package main
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
+	"github.com/sosedoff/go-craigslist"
 	"github.com/umahmood/haversine"
 	"net/http"
+	"strconv"
 )
 
 type CraigslistCity struct {
@@ -68,21 +70,27 @@ type CraigslistHarvester struct {
 
 func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
 	results := make([]SearchResult, 0)
-	//opts := craigslist.SearchOptions{
-	//	Query:    h.options.Query,
-	//	MinPrice: h.options.MinPrice,
-	//	MaxPrice: h.options.MaxPrice,
-	//}
-	//for _, city := range h.cities {
-	//	result, err := craigslist.Search(city.Region, opts)
-	//	if err != nil {
-	//		return result, errors.Wrap(err, "could not load craigslist data")
-	//	}
-	//	var data string
-	//	for _, listing := range results.Listings {
-	//
-	//	}
-	//}
+	opts := craigslist.SearchOptions{
+		Query:    h.options.Query,
+		MinPrice: h.options.MinPrice,
+		MaxPrice: h.options.MaxPrice,
+	}
+	for _, city := range h.cities {
+		result, err := craigslist.Search(city.Region, opts)
+		if err != nil {
+			return results, errors.Wrap(err, "could not load craigslist data")
+		}
+		for _, listing := range result.Listings {
+			results = append(results, SearchResult{
+				Vendor:    "Craigslist",
+				Title:     listing.Title,
+				Posted:    listing.PostedAt,
+				Price:     strconv.Itoa(listing.Price),
+				Latitude:  listing.Location.Lat,
+				Longitude: listing.Location.Lng,
+			})
+		}
+	}
 
 	return results, nil
 }
