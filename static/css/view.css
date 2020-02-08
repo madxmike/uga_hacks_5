@@ -2,3 +2,20 @@
 	     height: 80vh;
 		 width: 100%;
 	 }
+
+
+	 .checkbox-lg .custom-control-label::before, 
+	 .checkbox-lg .custom-control-label::after {
+	   top: .8rem;
+	   width: 1.75em;
+	   height: 1.75rem;
+	 }
+
+	 .checkbox-lg .custom-control-label {
+		padding-top: 13px;
+		padding-left: 6px;
+	  }
+
+
+  
+	  
