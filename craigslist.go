@@ -3,9 +3,7 @@ package main
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
-	"github.com/sosedoff/go-craigslist"
 	"github.com/umahmood/haversine"
-	"io"
 	"net/http"
 )
 
@@ -68,23 +66,23 @@ type CraigslistHarvester struct {
 	cities  []CraigslistCity
 }
 
-func (h *CraigslistHarvester) Harvest(writer io.Writer) error {
-	opts := craigslist.SearchOptions{
-		Query:    h.options.Query,
-		MinPrice: h.options.MinPrice,
-		MaxPrice: h.options.MaxPrice,
-	}
-	for _, city := range h.cities {
-		results, err := craigslist.Search(city.Region, opts)
-		if err != nil {
-			return errors.Wrap(err, "could not load craigslist data")
-		}
-		var data string
-		for _, listings := range results.Listings {
-			data, err = listings.JSON()
-			_, _ = writer.Write([]byte(data))
-		}
-	}
+func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
+	results := make([]SearchResult, 0)
+	//opts := craigslist.SearchOptions{
+	//	Query:    h.options.Query,
+	//	MinPrice: h.options.MinPrice,
+	//	MaxPrice: h.options.MaxPrice,
+	//}
+	//for _, city := range h.cities {
+	//	result, err := craigslist.Search(city.Region, opts)
+	//	if err != nil {
+	//		return result, errors.Wrap(err, "could not load craigslist data")
+	//	}
+	//	var data string
+	//	for _, listing := range results.Listings {
+	//
+	//	}
+	//}
 
-	return nil
+	return results, nil
 }
