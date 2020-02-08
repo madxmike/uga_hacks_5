@@ -3,11 +3,12 @@ let map = L.map('mapid').setView([33.7490, -84.3880], 11);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-
+let markers = L.layerGroup();
 
 
 search.onsubmit = async (e) => {
     e.preventDefault();
+    document.getElementById("spin").style.display = "inline-block";
     console.log("test")
     
     let form = new FormData(search);
@@ -32,7 +33,7 @@ search.onsubmit = async (e) => {
     });
 
     let mapData = await response.json();
-
+    markers.clearLayers(); 
     for(let i=0; i<mapData.length; i++){
         
         let mapItem = mapData[i];
@@ -52,16 +53,16 @@ search.onsubmit = async (e) => {
         elem.getElementById("Price").innerHTML = mapItem.Price;
         elem.getElementById("Posted").innerHTML = mapItem.Posted;
         */
-        let listing = L.popup()
-        .setLatLng([mapItem.Lat, mapItem.Long]).addTo(map);
         
+        let loc = L.latLng(mapItem.latitude, mapItem.longitude);
+        let listing = L.marker()
+        .bindPopup("yeet")
+        .setLatLng(loc).addTo(markers);
     }
+    markers.addTo(map);
+    document.getElementById("spin").style.display = "none";
 
-    let result = await response.json();
-
-    console.log(result)
   };
-
   
 
 document.getElementsByClassName("currency").onblur =function (){
