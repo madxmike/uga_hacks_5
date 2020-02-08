@@ -1,4 +1,7 @@
-let map = L.map('mapid').setView([33.7490, -84.3880], 11);
+let map = L.map('mapid', {
+    minZoom: 11,
+    maxZoom: 15
+}).setView([33.7490, -84.3880], 11);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
