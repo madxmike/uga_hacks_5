@@ -43,6 +43,7 @@ search.onsubmit = async (e) => {
         if(myrep.ok){
             popup_text = await myrep.text();
         } 
+        
     for(let i=0; i<mapData.length; i++){
         
         let mapItem = mapData[i];
@@ -60,7 +61,7 @@ search.onsubmit = async (e) => {
         elem.getElementById("Title").innerHTML = mapItem.title;
         elem.getElementById("Price").innerHTML = mapItem.price;
         elem.getElementById("Posted").innerHTML = mapItem.posted;
-        elem.getElementById("Link").href = mapItem.link;
+        elem.getElementById("Link").href = mapItem.url;
         elem.getElementById("Description").innerHTML = mapItem.description;
         
         let loc = L.latLng(mapItem.latitude, mapItem.longitude);
