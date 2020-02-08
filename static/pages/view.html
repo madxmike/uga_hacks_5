@@ -3,9 +3,6 @@
 <html en="en">
     <head>
 		<meta charset="UTF-8">
-
-		
-		
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<link rel="stylesheet" href="/static/css/view.css">
@@ -17,64 +14,57 @@
     </head>
     <body>
 		{{template "nav"}}
-		
-		<div class="container" style="margin-top: 1%;">
-
-				<form id="search">
-
-					<div class="form-row">
-						<div class="form-group col-lg-6">
-							<label for="formGroupInputLarge">Item</label>
-							<input class="form-control input-lg" type="search" id="formGroupInputLarge" placeholder="Search for listings" name="query">
+		<div class="container-fluid" id="view-page">
+			<div class="row">
+				<div class="col-lg-2 col-md-4" id="sidebar">
+					<div class="container-fluid" id="sidebar-container">
+						<div class="row pt-3 pr-2 justify-content-center" id="sidebar-header">
+							<h4 class="row-12" id="sidebar-title">Filter Options</h4>
 						</div>
-						<div class="form-group col-lg-2">
-							<div class="custom-control custom-checkbox checkbox-lg" style="margin-top: 1.3em;">
-								<input type="checkbox" class="custom-control-input" id="enableCraig" checked>
-								<label class="custom-control-label" for="enableCraig" style="text-align: center;">Use<br>Craigslist</label>
+						<div class="row" id="sidebar-body">
+							<div class="col-12 container-fluid" id="sidebar-body-container">
+								<form id="search">
+									<div class="form-row" id="search-row">
+										<div class="form-group col-12">
+											<input class="form-control input-lg text-center" type="search" id="formGroupInputLarge" placeholder="Search for listings" name="query">
+										</div>
+									</div>
+									<div class="form-row" id="sources-row">
+										<h6 class="font-weight-bold" id="vendor-title">Choose Sources</h6>
+										<div class="custom-control custom-switch">
+											<input type="checkbox" class="custom-control-input" checked id="craigslistToggle" name="use_craigslist">
+											<label class="custom-control-label active" for="craigslistToggle">Craigslist</label>
+										</div>
+									</div>
+									<div class="form-row mt-2" id="prices-row">
+										<h6 class="font-weight-bold" id="vendor-title">Pricing</h6>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<div class="input-group-text">$</div>
+												</div>
+												<input class="form-control input-lg" id="listingPriceMin" name="price_min" type="number" min="0" step="any" placeholder="Minimum Price" pattern="[0-9]*">
+											</div>
+											<div class="input-group mt-2">
+												<div class="input-group-prepend">
+													<div class="input-group-text">$</div>
+												</div>
+												<input class="form-control input-lg" id="listingPriceMax" name="price_max" type="number" min="0" step="any" placeholder="Maximum Price" pattern="[0-9]*">
+											</div>
+									</div>
+									<div class="form-row mt-2">
+										<button class="btn btn-primary col-12" type="submit">Search!</button>
+									</div>
+								</form>
 							</div>
 						</div>
+						<div class="row" id="sidebar-footer"></div>
 					</div>
-
-					<div class="form-row">
-						<div class="form-group col-lg-3">
-							<label for="listingPriceMin">Minimum Price</label>
-    						<input class="form-control input-lg" type="number" id="listingPriceMin" placeholder="Minimum Price">
-						</div>
-						<div class="form-group col-lg-3">
-							<label for="listingPriceMax">Maximum Price</label>
-							<input class="form-control input-lg" type="number" id="listingPriceMax" placeholder="Maximum Price"></input>
-						</div>
-					</div>
-
-					<div class="form-row">
-						<div class="form-group col-lg-6">
-							<div class="slidecontainer">
-								<label for="customDistance">Distance</label>
-								<input type="range" class="custom-range" id="distanceSlider" min="0" max="100" value="50" step="5" id="customDistance" oninput="updateDistance(this.value);">	
-							</div>
-						</div>
-						<div class="form-group col-lg-2">
-							<div class="distanceValue">
-								<input type="text" id="distanceDisplay" value="">
-							</div>
-						</div>
-					</div>
-					
-						
-				  
-					  
-					  
-				</form>
-
-			<div class="row map-container">
-				<div class="col-lg-12" id="mapid"></div>
-
-				
-
+				</div>
+				<div class="col-lg-10 col-md-8" id="map-container">
+					<div id="mapid"></div>
+				</div>
 			</div>
-
 		</div>
-	
 	</body>
 	<script src="/static/js/query.js"></script>
 </html>
