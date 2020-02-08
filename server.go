@@ -19,6 +19,9 @@ func StartServer(port string) {
 		r.Route("/about", func(r chi.Router) {
 			r.Get("/", ServeTemplate("about"))
 		})
+		r.Route("/popup", func(r chi.Router) {
+			r.Get("/", ServeTemplate("popup"))
+		})
 
 		r.Route("/api", func(r chi.Router) {
 			cities, err := LoadAllCities()
