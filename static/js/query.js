@@ -20,3 +20,13 @@ search.onsubmit = async (e) => {
 
     alert(result.message);
   };
+
+
+  
+
+  function updateDistance(val) {
+    document.getElementById('distanceDisplay').value=val; 
+  }
+
+
+
