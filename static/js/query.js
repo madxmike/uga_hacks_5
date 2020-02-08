@@ -11,15 +11,27 @@ search.onsubmit = async (e) => {
     console.log("test")
     
     let form = new FormData(search);
-    form.append("bounds", map.getBounds().toBBoxString());
-    for (let entry of form.entries()) {
-        console.log(entry)
+    let priceMin = form.get("price_min")
+    let priceMax = form.get("price_max")
+    console.log(priceMin)
+    console.log(priceMax)
+    if (priceMin === "") {
+        form.set("price_min", "0")
     }
+    if (priceMax === "") {
+        form.set("price_max", "1000")
+    }
+    form.append("bounds", map.getBounds().toBBoxString());
+    console.log(JSON.stringify(Object.fromEntries(form)))
     let response = await fetch(window.location.origin + '/api/search', {
       method: 'POST',
-      body: form
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(Object.fromEntries(form))
     });
 
+<<<<<<< HEAD
     let mapData = await response.json();
     
     for(let i=0; i<mapData.length; i++){
@@ -47,6 +59,11 @@ search.onsubmit = async (e) => {
         .openOn(map);
         
     }
+
+    let result = await response.json();
+
+    console.log(result)
+>>>>>>> 6dd3ad612d9c5ceb92ebc37e3d3f5cdcca8832b2
   };
 
   
