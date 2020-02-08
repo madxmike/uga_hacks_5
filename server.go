@@ -15,6 +15,10 @@ func StartServer(port string) {
 		r.Route("/view", func(r chi.Router) {
 			r.Get("/", ServeTemplate("view"))
 		})
+		r.Route("/api", func(r chi.Router) {
+			r.Method("POST", "/search", &SearchHandler{})
+		})
+
 	})
 	r.Mount("/static/", ServeStatic("/static/"))
 

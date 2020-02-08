@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/pkg/errors"
 	"html/template"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -55,4 +57,63 @@ func ServeStatic(path string) http.HandlerFunc {
 		}
 		fs.ServeHTTP(w, r)
 	}
+}
+
+type SearchHandler struct {
+	opts searchOptions
+}
+
+type searchOptions struct {
+	UseCraigslist bool
+	Query         string
+	Location      string
+	Miles         string
+	MinPrice      int
+	MaxPrice      int
+}
+
+func (h *SearchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	opts, err := h.parseForm(r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotAcceptable)
+		return
+	}
+	h.opts = *opts
+
+	log.Println(h.opts)
+	harvesters := make([]Harvester, 0)
+
+	if h.opts.UseCraigslist {
+		harvesters = append(harvesters, &CraigslistHarvester{
+			options: h.opts,
+		})
+	}
+}
+
+func (h *SearchHandler) parseForm(r *http.Request) (*searchOptions, error) {
+	err := r.ParseForm()
+	if err != nil {
+		return nil, errors.Wrap(err, "could not parse search form")
+	}
+
+	minPrice, err := strconv.Atoi(r.FormValue("price_min"))
+	if err != nil {
+		return nil, errors.Wrap(err, "could not parse price_min")
+	}
+	maxPrice, err := strconv.Atoi(r.FormValue("price_max"))
+	if err != nil {
+		return nil, errors.Wrap(err, "could not parse price_max")
+	}
+	useCraigslist, err := strconv.ParseBool(r.FormValue("use_craigslist"))
+	if err != nil {
+		return nil, errors.Wrap(err, "could not parse use_craigslist")
+	}
+	return &searchOptions{
+		UseCraigslist: useCraigslist,
+		Query:         r.FormValue("query"),
+		Location:      r.FormValue("location"),
+		Miles:         r.FormValue("miles"),
+		MinPrice:      minPrice,
+		MaxPrice:      maxPrice,
+	}, nil
 }
