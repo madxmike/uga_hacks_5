@@ -57,12 +57,15 @@ search.onsubmit = async (e) => {
         elem.getElementById("Title").innerHTML = mapItem.title;
         elem.getElementById("Price").innerHTML = mapItem.price;
         elem.getElementById("Posted").innerHTML = mapItem.posted;
-        
+        //elem.getElementById("Link").href = mapItem.link;
+        //elem.getElementById("Description").innerHTML = mapItem.description;
         
         let loc = L.latLng(mapItem.latitude, mapItem.longitude);
         let listing = L.marker()
         .bindPopup(elem.getElementById("body"))
-        .setLatLng(loc).addTo(markers);
+        .setLatLng(loc)
+        .addTo(markers);
+
     }
     markers.addTo(map);
     document.getElementById("spin").style.display = "none";
