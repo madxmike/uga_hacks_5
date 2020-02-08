@@ -2,15 +2,11 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"github.com/pkg/errors"
 	"html/template"
 	"log"
 	"net/http"
-	"strconv"
 	"strings"
-	"time"
 )
 
 func TemplateLoader(path string, liveMode bool) func(next http.Handler) http.Handler {
