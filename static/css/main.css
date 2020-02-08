@@ -14,15 +14,14 @@
     filter: blur(3px);
     transform: scale(1.02);
     z-index: -1;
-    
-}
 
+}
 
 #box{
     position: relative;
     width: 100vw;
     height: 100vh;
-    
+
 }
 
 #boxChild{
@@ -32,11 +31,37 @@
     transform: translate(-50%, -50%);
 }
 
+#view-page {
+  height: 100vh;
+}
+
+#view-page .row {
+  height: 100%;
+}
+
+#mapid {
+  height: 100%;
+  width: 100%;
+}
+
+.view {
+  margin-top: 1vh;
+  color: black;
+}
 
 
 
-  
-  nav ul {
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+nav ul {
     list-style: none;
     text-align: center;
   }
