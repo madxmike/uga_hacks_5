@@ -33,30 +33,34 @@ search.onsubmit = async (e) => {
     });
 
     let mapData = await response.json();
+    
     markers.clearLayers(); 
     for(let i=0; i<mapData.length; i++){
         
         let mapItem = mapData[i];
         let logo = "";
-        if(mapItem.Vendor == "craigslist"){
+        if(mapItem.vendor == "Craigslist"){
+            
             logo = "/static/img/craigslist_logo.png";
         }
-        /*
+        
         let myrep = await fetch('/static/pages/popup.html');
-        let elem = "";
+        let popup_text = "";
         if(myrep.ok){
-            elem = await myrep.text();
+            popup_text = await myrep.text();
         }
         
+       let domparser = new DOMParser();
+       let elem = domparser.parseFromString(popup_text,'text/html');
         elem.getElementById("Vendor").src = logo;
-        elem.getElementById("Title").innerHTML = mapItem.Title;
-        elem.getElementById("Price").innerHTML = mapItem.Price;
-        elem.getElementById("Posted").innerHTML = mapItem.Posted;
-        */
+        elem.getElementById("Title").innerHTML = mapItem.title;
+        elem.getElementById("Price").innerHTML = mapItem.price;
+        elem.getElementById("Posted").innerHTML = mapItem.posted;
+        
         
         let loc = L.latLng(mapItem.latitude, mapItem.longitude);
         let listing = L.marker()
-        .bindPopup("yeet")
+        .bindPopup(elem.getElementById("body"))
         .setLatLng(loc).addTo(markers);
     }
     markers.addTo(map);
