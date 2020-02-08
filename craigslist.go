@@ -3,7 +3,9 @@ package main
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
+	"github.com/sosedoff/go-craigslist"
 	"github.com/umahmood/haversine"
+	"io"
 	"net/http"
 )
 
@@ -34,7 +36,7 @@ func LoadAllCities() ([]CraigslistCity, error) {
 
 	}
 	defer resp.Body.Close()
-	err = json.NewDecoder(resp.Body).Decode(cities)
+	err = json.NewDecoder(resp.Body).Decode(&cities)
 	if err != nil {
 		return cities, errors.Wrap(err, "could not parse city data")
 	}
@@ -59,4 +61,30 @@ func FindAllCitiesWithinFrom(cities []CraigslistCity, miles float64, lat float64
 		}
 	}
 	return within
+}
+
+type CraigslistHarvester struct {
+	options searchOptions
+	cities  []CraigslistCity
+}
+
+func (h *CraigslistHarvester) Harvest(writer io.Writer) error {
+	opts := craigslist.SearchOptions{
+		Query:    h.options.Query,
+		MinPrice: h.options.MinPrice,
+		MaxPrice: h.options.MaxPrice,
+	}
+	for _, city := range h.cities {
+		results, err := craigslist.Search(city.Region, opts)
+		if err != nil {
+			return errors.Wrap(err, "could not load craigslist data")
+		}
+		var data string
+		for _, listings := range results.Listings {
+			data, err = listings.JSON()
+			_, _ = writer.Write([]byte(data))
+		}
+	}
+
+	return nil
 }

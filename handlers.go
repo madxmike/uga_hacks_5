@@ -60,14 +60,15 @@ func ServeStatic(path string) http.HandlerFunc {
 }
 
 type SearchHandler struct {
-	opts searchOptions
+	craiglistCities []CraigslistCity
 }
 
 type searchOptions struct {
 	UseCraigslist bool
 	Query         string
-	Location      string
-	Miles         string
+	Lat           float64
+	Long          float64
+	Miles         float64
 	MinPrice      int
 	MaxPrice      int
 }
@@ -78,14 +79,13 @@ func (h *SearchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusNotAcceptable)
 		return
 	}
-	h.opts = *opts
 
-	log.Println(h.opts)
 	harvesters := make([]Harvester, 0)
 
-	if h.opts.UseCraigslist {
+	if opts.UseCraigslist {
 		harvesters = append(harvesters, &CraigslistHarvester{
-			options: h.opts,
+			options: *opts,
+			cities:  FindAllCitiesWithinFrom(h.craiglistCities, opts.Miles, opts.Lat, opts.Long),
 		})
 	}
 }
@@ -104,6 +104,18 @@ func (h *SearchHandler) parseForm(r *http.Request) (*searchOptions, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "could not parse price_max")
 	}
+	miles, err := strconv.Atoi(r.FormValue("miles"))
+	if err != nil {
+		return nil, errors.Wrap(err, "could not parse miles")
+	}
+	lat, err := strconv.Atoi(r.FormValue("lat"))
+	if err != nil {
+		return nil, errors.Wrap(err, "could not parse lat")
+	}
+	long, err := strconv.Atoi(r.FormValue("long"))
+	if err != nil {
+		return nil, errors.Wrap(err, "could not parse long")
+	}
 	useCraigslist, err := strconv.ParseBool(r.FormValue("use_craigslist"))
 	if err != nil {
 		return nil, errors.Wrap(err, "could not parse use_craigslist")
@@ -111,8 +123,9 @@ func (h *SearchHandler) parseForm(r *http.Request) (*searchOptions, error) {
 	return &searchOptions{
 		UseCraigslist: useCraigslist,
 		Query:         r.FormValue("query"),
-		Location:      r.FormValue("location"),
-		Miles:         r.FormValue("miles"),
+		Lat:           float64(lat),
+		Long:          float64(long),
+		Miles:         float64(miles),
 		MinPrice:      minPrice,
 		MaxPrice:      maxPrice,
 	}, nil
