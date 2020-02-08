@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func TemplateLoader(path string, liveMode bool) func(next http.Handler) http.Handler {
@@ -129,4 +130,13 @@ func (h *SearchHandler) parseForm(r *http.Request) (*searchOptions, error) {
 		MinPrice:      minPrice,
 		MaxPrice:      maxPrice,
 	}, nil
+}
+
+type SearchResult struct {
+	Vendor    string    `json:"vendor"`
+	Title     string    `json:"title"`
+	Posted    time.Time `json:"posted"`
+	Price     string    `json:"price"`
+	Latitude  string    `json:"latitude"`
+	Longitude string    `json:"longitude"`
 }
