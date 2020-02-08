@@ -30,10 +30,9 @@ search.onsubmit = async (e) => {
         },
         body: JSON.stringify(Object.fromEntries(form))
     });
-
-<<<<<<< HEAD
-    let mapData = await response.json();
     
+    let mapData = await response.json();
+   
     for(let i=0; i<mapData.length; i++){
         
         let mapItem = mapData[i];
@@ -54,16 +53,10 @@ search.onsubmit = async (e) => {
         elem.getElementById("Posted").innerHTML = mapItem.Posted;
         */
         let listing = L.popup()
-        .setLatLng([mapItem.Lat, mapItem.Long])
-        //.setContent(elem)
-        .openOn(map);
+        .setLatLng([mapItem.Lat, mapItem.Long]).openOn(map);
         
     }
 
-    let result = await response.json();
-
-    console.log(result)
->>>>>>> 6dd3ad612d9c5ceb92ebc37e3d3f5cdcca8832b2
   };
 
   
