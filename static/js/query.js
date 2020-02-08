@@ -1,5 +1,5 @@
 let map = L.map('mapid', {
-    minZoom: 11,
+    minZoom: 8,
     maxZoom: 15
 }).setView([33.7490, -84.3880], 11);
 
@@ -60,12 +60,12 @@ search.onsubmit = async (e) => {
         elem.getElementById("Title").innerHTML = mapItem.title;
         elem.getElementById("Price").innerHTML = mapItem.price;
         elem.getElementById("Posted").innerHTML = mapItem.posted;
-        //elem.getElementById("Link").href = mapItem.link;
-        //elem.getElementById("Description").innerHTML = mapItem.description;
+        elem.getElementById("Link").href = mapItem.link;
+        elem.getElementById("Description").innerHTML = mapItem.description;
         
         let loc = L.latLng(mapItem.latitude, mapItem.longitude);
         let listing = L.marker()
-        .bindPopup(elem.getElementById("body"))
+        .bindPopup(elem.getElementById("body"), {maxWidth: 700, maxHeight: 500})
         .setLatLng(loc)
         .addTo(markers);
 
