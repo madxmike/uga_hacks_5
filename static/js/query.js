@@ -1,28 +1,68 @@
-let map = L.map('mapid').setView([51.505, -0.09], 13);
+let map = L.map('mapid').setView([33.7490, -84.3880], 11);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 
-var marker = L.marker([51.5, -0.09]).addTo(map);
+
 search.onsubmit = async (e) => {
     e.preventDefault();
     console.log("test")
+    
     let form = new FormData(search);
-    form.append("bounds", map.getBounds().toBBoxString());
-    for (let entry of form.entries()) {
-        console.log(entry)
+    let priceMin = form.get("price_min")
+    let priceMax = form.get("price_max")
+    console.log(priceMin)
+    console.log(priceMax)
+    if (priceMin === "") {
+        form.set("price_min", "0")
     }
+    if (priceMax === "") {
+        form.set("price_max", "1000")
+    }
+    form.append("bounds", map.getBounds().toBBoxString());
+    console.log(JSON.stringify(Object.fromEntries(form)))
     let response = await fetch(window.location.origin + '/api/search', {
       method: 'POST',
-      body: form
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(Object.fromEntries(form))
     });
+
+    let mapData = await response.json();
+
+    for(let i=0; i<mapData.length; i++){
+        
+        let mapItem = mapData[i];
+        let logo = "";
+        if(mapItem.Vendor == "craigslist"){
+            logo = "/static/img/craigslist_logo.png";
+        }
+        /*
+        let myrep = await fetch('/static/pages/popup.html');
+        let elem = "";
+        if(myrep.ok){
+            elem = await myrep.text();
+        }
+        
+        elem.getElementById("Vendor").src = logo;
+        elem.getElementById("Title").innerHTML = mapItem.Title;
+        elem.getElementById("Price").innerHTML = mapItem.Price;
+        elem.getElementById("Posted").innerHTML = mapItem.Posted;
+        */
+        let listing = L.popup()
+        .setLatLng([mapItem.Lat, mapItem.Long]).addTo(map);
+        
+    }
 
     let result = await response.json();
 
-     alert(result.message);
+    console.log(result)
   };
+
+  
 
 document.getElementsByClassName("currency").onblur =function (){
 
