@@ -6,7 +6,7 @@
 		{{template "nav"}}
 		<div class="container-fluid h-100" id="view-page">
 			<div class="row min-vh-100 vh-100">
-				<div class="col-lg-2 col-md-4 " id="sidebar">
+				<div class="col-lg-3 col-md-4 " id="sidebar">
 					<div class="container-fluid" id="sidebar-container">
 						<div class="row pt-3 pr-2 justify-content-center" id="sidebar-header">
 							<h4 class="row-12" id="sidebar-title">Filter Options</h4>
@@ -15,7 +15,8 @@
 							<div class="col-12 container-fluid" id="sidebar-body-container">
 								<form id="search">
 									<div class="form-row" id="search-row">
-										<div class="form-group col-11">
+										<span class="col-1"></span>
+										<div class="form-group col-10">
 											<input class="form-control input-lg text-center" type="search" id="query" placeholder="Search for listings" name="query">
 										</div>
 										<div class="form-group col-1">
@@ -31,11 +32,14 @@
 											<label class="custom-control-label active" for="craigslistToggle">Craigslist</label>
 										</div>
                                         <br>
-                                        <div class="custom-control custom-switch">
+                                        
+									</div>
+									<div class="form-row form-group" id="sources-row">
+										<div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" id="facebookToggle" name="use_facebook" disabled>
                                             <label class="custom-control-label active" for="facebookToggle">Facebook</label>
                                         </div>
-									</div>
+									</div class="form-row form-group" id="sources-row">
 									<div class="form-row mt-2" id="prices-row">
 										<h6 class="font-weight-bold col-12" id="vendor-title">Pricing</h6>
 											<div class="input-group">
@@ -50,35 +54,58 @@
 												</div>
 												<input class="form-control input-lg" id="listingPriceMax" name="price_max" type="number" min="0" step="any" placeholder="Maximum Price" pattern="[0-9]*">
 											</div>
-											<div class="input-group">
+											<div class="input-group mt-2">
 												<input class="form-control input-lg" id="address" name="address" placeholder="Address">
 											</div>
-											<div class="input-group mt-2">
-												<input class="form-control input-lg" id="maxDistance" name="maxDistance" type="number" min="0" step="any" placeholder="Max distance" pattern="[0-9]*">
-											</div>
+											
+									</div>
+									<div class="form-row mt-2">
+										<div class="input-group col-lg-6 col-md-6">
+											<input class="form-control input-lg" id="city" name="city" placeholder="City">
+										</div>
+										<div class="input-group col-lg-6 col-md-6">
+											<input class="form-control input-lg" id="region" name="region" placeholder="Region">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="input-group mt-2">
+											<input class="form-control input-lg" id="maxDistance" name="maxDistance" type="number" min="0" step="any" placeholder="Max distance (miles)" pattern="[0-9]*">
+										</div>
 									</div>
 									<div class="form-row mt-2">
 										<button class="btn btn-primary col-12" type="submit">Search!</button>
 									</div>
 								</form>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn btn-secondary active">
-									  <input type="radio" name="options" id="map" autocomplete="off" checked>Map
-									</label>
-									<label class="btn btn-secondary">
-									  <input type="radio" name="options" id="grid" autocomplete="off">Grid
-									</label>
-								  </div>
+								
 							</div>
+						</div>
+						<div class="row">
+							
+							<div data-toggle="buttons" class="btn-group btn-group-toggle col-md-12 col-lg-12 justify-content-center mt-2">
+								
+									<label class="btn btn-secondary active">
+										<input type="radio" name="options" id="map" autocomplete="off" checked>Map
+									</label>
+								
+								
+									<label class="btn btn-secondary">
+										<input type="radio" name="options" id="grid" autocomplete="off">Grid
+									</label>
+								
+							</div>
+							
 						</div>
 						<div class="row" id="sidebar-footer"></div>
 					</div>
 				</div>
-				<div class="col-lg-10 col-md-8 mt-sm-2 mb-2 mt-mb-0 mt-lg-0 mb-lg-0 mr-lg-0 mr-sm-0 ml-sm-0 mr-md-0 mt-md-0 pl-0 pr-0" id="map-container">
+				<div class="col-lg-9 col-md-8 mt-sm-2 mb-2 mt-mb-0 mt-lg-0 mb-lg-0 mr-lg-0 mr-sm-0 ml-sm-0 mr-md-0 mt-md-0 pl-0 pr-0" id="map-container">
 					<div class="h-100 d-flex flex-column">
 						<div class=" flex-grow-1 custom-popup" id="mapid"></div>
 					</div>
 				</div>
+				<div class="col-lg-9 col-md-8 mt-sm-2 mb-2 mt-mb-0 mt-lg-0 mb-lg-0 mr-lg-0 mr-sm-0 ml-sm-0 mr-md-0 mt-md-0 pl-0 pr-0" id="map-container">
+					<div class=" flex-grow-1 custom-popup" id="list"></div>
+				</div>	
 			</div>
 		</div>
 	</body>

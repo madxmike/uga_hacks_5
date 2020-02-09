@@ -31,19 +31,29 @@ map.on('popupclose', function(e) {
     });
 });
 
+document.getElementById("map").onclick = function () {
+    document.getElementById("mapid").style.visibility = "visible";
+    document.getElementById("list").style.visibility = "hidden";
+};
+document.getElementById("grid").onclick = function () {
+    document.getElementById("list").style.visibility = "visible";
+    document.getElementById("mapid").style.visibility = "hidden";
+};
+
 search.onsubmit = async (e) => {
     e.preventDefault();
-    
+    latlng = map.getCenter();
     document.getElementById("spin").style.display = "inline-block";
     
     let form = new FormData(search);
-    let address = form.get("address");
+    let address = form.get("address") + " " + form.get('city') + " " + form.get('region');
 
     let promise = toLatLng(address)
 
     await promise.then((message) => {
         setLoc(message)
     }).catch((error) => {
+        latlng = map.getCenter();
         console.log(error);
     });
     setDefaults(form);
@@ -75,11 +85,17 @@ search.onsubmit = async (e) => {
     
   };//onSubmit
   
-  function setLoc(result) {
-    let lat = result.response.view[0].result[0].location.displayPosition.latitude;
-    let lng = result.response.view[0].result[0].location.displayPosition.longitude;
+  function setLoc(result, address) {
+      
+        let lat = result.response.view[0].result[0].location.displayPosition.latitude;
+        let lng = result.response.view[0].result[0].location.displayPosition.longitude;
+        latlng = L.latLng(lat, lng);
+      
+        
+      
     
-    latlng = L.latLng(lat, lng);
+    
+    
     
   }//setloc
   
@@ -96,7 +112,7 @@ search.onsubmit = async (e) => {
   }//setDefaults
 
   function toLatLng(address) {
-    latlng = map.getCenter();
+    
     return new Promise((resolve, reject) => {
         let geocoder = platform.getGeocodingService(),
         geocodingParameters = {
