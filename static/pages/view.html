@@ -5,7 +5,7 @@
     <body>
 		{{template "nav"}}
 		<div class="container-fluid h-100" id="view-page">
-			<div class="row min-vh-100 vh-100">
+			<div class="row min-vh-100 vh-100 ">
 				<div class="col-lg-3 col-md-4 " id="sidebar">
 					<div class="container-fluid" id="sidebar-container">
 						<div class="row pt-3 pr-2 justify-content-center" id="sidebar-header">
@@ -95,12 +95,13 @@
 				</div>
 				<div class="col-lg-9 col-md-8 mt-sm-2 mb-2 mt-mb-0 mt-lg-0 mb-lg-0 mr-lg-0 mr-sm-0 ml-sm-0 mr-md-0 mt-md-0 pl-0 pr-0" id="map-container">
 					<div class="h-100 d-flex flex-column">
-						<div class=" flex-grow-1 custom-popup" id="mapid"></div>
+						<div class="flex-grow-1 custom-popup" id="mapid"></div>
 					</div>
 				</div>
-				<span class="col-lg-9 col-md-8" id="list-container">
-					<span id="list"></span>
-				</div>	
+				<span class="h-100 d-flex flex-column col-lg-9 col-md-8 overflow-auto" id="list-container">
+					<span id="list" class="flex-grow-1"></span>
+				</span>
+				</div>
 			</div>
 		</div>
 	</body>

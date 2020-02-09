@@ -29,13 +29,15 @@ map.on('popupclose', function(e) {
 });
 
 document.getElementById("map").onclick = function () {
-    document.getElementById("mapid").style.visibility = "visible";
-    document.getElementById("list").style.visibility = "hidden";
-    
+    document.getElementById("list-container").style.display = "none";
+
+    document.getElementById("map-container").style.display = "block";
+
 };
 document.getElementById("grid").onclick = function () {
-    document.getElementById("list").style.visibility = "visible";
-    document.getElementById("mapid").style.visibility = "hidden";
+    document.getElementById("list-container").style.display = "block";
+
+    document.getElementById("map-container").style.display = "none";
 };
 
 search.onsubmit = async (e) => {
