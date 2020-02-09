@@ -15,11 +15,13 @@
 							<div class="col-12 container-fluid" id="sidebar-body-container">
 								<form id="search">
 									<div class="form-row d-flex justify-content-center" id="search-row">
-										<div class="form-group col-12">
+										<div class="form-group col-11">
 											<input class="form-control input-lg text-center" type="search" id="query" placeholder="Search for listings" name="query">
 										</div>
-										<div class="spinner-border" role="status" id="spin" style="display: none;">
-											<span class="sr-only">Loading...</span>
+										<div class="form-group col-1">
+											<div class="spinner-border" role="status" id="spin" style="display: none;">
+												<span class="sr-only">Loading...</span>
+											</div>
 										</div>
 									</div>
 									<div class="form-row" id="sources-row">
@@ -27,6 +29,13 @@
 										<div class="custom-control custom-switch">
 											<input type="checkbox" class="custom-control-input" checked id="craigslistToggle" name="use_craigslist">
 											<label class="custom-control-label active" for="craigslistToggle">Craigslist</label>
+										</div>
+										
+									</div>
+									<div class="form-row" id="sources-row">
+										<div class="custom-control custom-switch">
+											<input type="checkbox" class="custom-control-input" checked id="ebayToggle" name="use_ebay" >
+											<label class="custom-control-label active" for="ebayToggle">ebay</label>
 										</div>
 									</div>
 									<div class="form-row mt-2" id="prices-row">
