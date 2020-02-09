@@ -130,7 +130,7 @@ search.onsubmit = async (e) => {
 
   function populateMap(mapData, maxBounds, popup_text, markers){
     for(let i=0; i<mapData.length; i++){
-        
+       
         let mapItem = mapData[i];
         let listLoc = L.latLng(mapItem.latitude, mapItem.longitude);
         if(!maxBounds.contains(listLoc)){
@@ -157,9 +157,12 @@ search.onsubmit = async (e) => {
         .setLatLng(loc)
         .addTo(markers);
         
+        document.getElementById("list").innerHTML = elem.getElementById("body").outerHTML;
+        
      }
      markers.addTo(map);
     }
+    
   function onError(error) {
     alert('Can\'t load address.');
 
