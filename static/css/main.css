@@ -2,7 +2,11 @@ body {
   background-color: black;
   overflow-y: hidden;
 }
-
+@media (min-width: 767.98px) and (max-width: 991.98px){
+  body {
+    overflow-y: auto;
+  }
+}
 
 #background {
     height: 100vh;
@@ -72,7 +76,9 @@ body {
     margin: 1%;
     padding: 1%;
 }
-
+#list-container {
+  display: none !important;
+}
 .custom-popup .leaflet-popup-content-wrapper {
   background: rgba(0, 0, 0, 0);
   box-shadow: none;
