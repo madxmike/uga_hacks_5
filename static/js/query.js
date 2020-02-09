@@ -10,6 +10,21 @@ let markers = L.layerGroup();
 let platform = new H.service.Platform({
     'apikey': 'eaQF8vvay1leHY9YE66PJkFL3Fh4OwwECClcpFV760Y'
   });
+map.on('popupopen', function(e) {
+    console.log("open")
+    var elements = document.querySelectorAll(".leaflet-tile-container,.leaflet-marker-pane", );
+    var blured = Array.prototype.filter.call(elements, function(element){
+        return element.style.filter = "blur(2px)"
+    });
+});
+
+map.on('popupclose', function(e) {
+    console.log("close")
+    var elements = document.querySelectorAll(".leaflet-tile-container,.leaflet-marker-pane", );
+    var blured = Array.prototype.filter.call(elements, function(element){
+        return element.style.filter = "blur(0px)"
+    });
+});
 
 search.onsubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +77,7 @@ search.onsubmit = async (e) => {
        let elem = domparser.parseFromString(popup_text,'text/html');
         elem.getElementById("Vendor").src = logo;
         elem.getElementById("Title").innerHTML = mapItem.title;
-        elem.getElementById("Price").innerHTML = mapItem.price;
+        elem.getElementById("Price").innerHTML = "$" + mapItem.price;
         elem.getElementById("Posted").innerHTML = mapItem.posted;
         elem.getElementById("Link").href = mapItem.url;
         elem.getElementById("Description").innerHTML = mapItem.description;
@@ -70,9 +85,9 @@ search.onsubmit = async (e) => {
         let loc = L.latLng(mapItem.latitude, mapItem.longitude);
         let listing = L.marker()
         .bindPopup(elem.getElementById("body"), {maxWidth: 700, maxHeight: 500})
+            .bindTooltip(mapItem.title)
         .setLatLng(loc)
         .addTo(markers);
-
     }
     markers.addTo(map);
     document.getElementById("spin").style.display = "none";

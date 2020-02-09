@@ -2,48 +2,20 @@
 <html>
     <body id="body" style="font-size: small; padding: 0.3em;">
 
-        <div class="main">
-            <div class="item1" style="text-align: center; border-radius: 2px;">
-                <img id="Vendor" height="50px" width="50px">
-            </div>
-            <div class="item2" style="border-style: solid; border-radius: 20px;">
-                <span style="color: black"><b>Title:</b></span> <br>
-                <span id="Title"></span>
-            </div>
-            <div class="item3" style="max-width: 100%; text-align: center; border-style: solid; border-radius: 20px; background-color: #bcebd9;">
-                <span style="color: black;"><br><b>Description</b></span> <hr>
-                 <span id="Description"></span>
-            </div>
-            <div class="item4" style="border-style: solid; border-radius: 20px;">
-                <span style="color: black;"><b>Price:</b></span><br>
-                $ <span id="Price"></span>
-            </div>
-            <div class="item5" style="border-style: solid; border-radius: 20px;">
-                <span style="color: black"><b>Posted:</b></span><br>
-                <span id="Posted"></span>
-            </div>
-            <div class="item6">
-                <a id="Link" target="_blank">Original Post</a>
-            </div>
-
-
-
+    <div class="card main">
+        <div class="card-header">
+            <img id="Vendor" height="50px" width="50px">
+            <span id="Title"></span>
+            <span class="float-right" id="Price"></span>
         </div>
-
-
-
-
-
-
-
-
-
-
-       
-
-
+        <div class="card-body">
+            <span id="Description"></span>
+        </div>
+        <div class="card-footer">
+            <span id="Posted"></span>
+            <a id="Link" target="_blank">View original Post</a>
+        </div>
+    </div>
     </body>
-
-
 </html>
 
