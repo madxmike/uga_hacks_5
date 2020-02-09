@@ -1,3 +1,5 @@
+
+
 .body {
     background-color: black;
 
@@ -13,9 +15,38 @@
     background-size: cover;
     position: fixed;
     filter: blur(3px);
-    transform: scale(1.02);
+    transform: scale(1.1);
     z-index: -1;
 
+}
+
+
+#yard{
+  color: #bcebd9;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 10em;
+  
+}
+
+ #box{
+  position: relative;
+  width: 100vw;
+  height: 25vh;
+
+}
+
+
+#boxChild{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+}
+
+#head{
+  text-align: center;
+  
 }
 
 
