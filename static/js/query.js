@@ -6,7 +6,7 @@ let map = L.map('mapid', {
     maxZoom: 15
 }).setView([33.7490, -84.3880], 11);
 
-L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3']
 }).addTo(map);
 
