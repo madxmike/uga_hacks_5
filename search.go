@@ -3,11 +3,9 @@ package main
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 )
 
 type SearchHandler struct {
@@ -23,27 +21,24 @@ type searchOptions struct {
 }
 
 type SearchResult struct {
-	Vendor      string     `json:"vendor"`
-	Title       string     `json:"title"`
-	Posted      *time.Time `json:"posted"`
-	Price       string     `json:"price"`
-	Latitude    float64    `json:"latitude"`
-	Longitude   float64    `json:"longitude"`
-	Description string     `json:"description"`
-	URL         string     `json:"url"`
+	Vendor      string  `json:"vendor"`
+	Title       string  `json:"title"`
+	Posted      string  `json:"posted"`
+	Price       string  `json:"price"`
+	Latitude    float64 `json:"latitude"`
+	Longitude   float64 `json:"longitude"`
+	Description string  `json:"description"`
+	URL         string  `json:"url"`
 }
 
 func (h *SearchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	opts, err := h.parseForm(r)
 	if err != nil {
-		log.Println(err)
 		http.Error(w, err.Error(), http.StatusNotAcceptable)
 		return
 	}
 
 	harvesters := make([]Harvester, 0)
-
-	log.Println(opts.UseCraigslist)
 	if opts.UseCraigslist == "on" {
 		bounds, err := h.parseBounds(opts.Bounds)
 		if err != nil {
@@ -83,7 +78,6 @@ func (h *SearchHandler) parseForm(r *http.Request) (searchOptions, error) {
 	if err != nil {
 		return searchOptions, errors.Wrap(err, "could not parse form")
 	}
-	log.Printf("%+v\n", searchOptions)
 	return searchOptions, nil
 }
 

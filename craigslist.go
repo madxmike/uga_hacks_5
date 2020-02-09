@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"github.com/madxmike/go-craigslist"
 	"github.com/pkg/errors"
-	"log"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 type CraigslistCity struct {
@@ -97,16 +97,17 @@ func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
 		for _, listing := range result.Listings {
 			got, err := craigslist.GetListing(listing.URL)
 			if err != nil {
-				log.Println(err)
 				continue
 			}
 			if got.Location == nil {
 				continue
 			}
+
+			timestamp := got.PostedAt.Format(time.Stamp)
 			results = append(results, SearchResult{
 				Vendor:      "Craigslist",
 				Title:       got.Title,
-				Posted:      got.PostedAt,
+				Posted:      timestamp,
 				Price:       strconv.Itoa(got.Price),
 				Latitude:    got.Location.Lat,
 				Longitude:   got.Location.Lng,
@@ -115,7 +116,5 @@ func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
 			})
 		}
 	}
-	log.Println(len(results))
-
 	return results, nil
 }
