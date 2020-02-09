@@ -1,12 +1,16 @@
 {{define "view"}}
 <!DOCTYPE html>
 <html en="en">
+	
 	{{template "header"}}
+		
+	
+	
     <body>
 		{{template "nav"}}
 		<div class="container-fluid" id="view-page">
 			<div class="row">
-				<div class="col-lg-2 col-md-4" id="sidebar">
+				<div class="col-lg-2 col-md-4 col-sm-4 col-xs-4" id="sidebar">
 					<div class="container-fluid" id="sidebar-container">
 						<div class="row pt-3 pr-2 justify-content-center" id="sidebar-header">
 							<h4 class="row-12" id="sidebar-title">Filter Options</h4>
@@ -14,7 +18,7 @@
 						<div class="row" id="sidebar-body">
 							<div class="col-12 container-fluid" id="sidebar-body-container">
 								<form id="search">
-									<div class="form-row d-flex justify-content-center" id="search-row">
+									<div class="form-row" id="search-row">
 										<div class="form-group col-11">
 											<input class="form-control input-lg text-center" type="search" id="query" placeholder="Search for listings" name="query">
 										</div>
@@ -26,6 +30,11 @@
 									</div>
 									<div class="form-row" id="sources-row">
 										<h6 class="font-weight-bold" id="vendor-title">Choose Sources</h6>
+										
+										
+									</div>
+									<div class="form-row" id="sources-row">
+										
 										<div class="custom-control custom-switch">
 											<input type="checkbox" class="custom-control-input" checked id="craigslistToggle" name="use_craigslist">
 											<label class="custom-control-label active" for="craigslistToggle">Craigslist</label>
@@ -62,7 +71,7 @@
 						<div class="row" id="sidebar-footer"></div>
 					</div>
 				</div>
-				<div class="col-lg-10 col-md-8" id="map-container">
+				<div class="col-lg-10 col-md-8 col-sm-8 col-xs-8" id="map-container">
 					<div id="mapid"></div>
 				</div>
 			</div>
