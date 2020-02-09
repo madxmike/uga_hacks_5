@@ -48,12 +48,15 @@
 											<div class="input-group">
 												<input class="form-control input-lg" id="address" name="address" placeholder="Address">
 											</div>
+											<div class="input-group mt-2">
+												<input class="form-control input-lg" id="maxDistance" name="maxDistance" type="number" min="0" step="any" placeholder="Max distance" pattern="[0-9]*">
+											</div>
 									</div>
 									<div class="form-row mt-2">
 										<button class="btn btn-primary col-12" type="submit">Search!</button>
 									</div>
 								</form>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin: auto; display: block;">
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
 									<label class="btn btn-secondary active">
 									  <input type="radio" name="options" id="map" autocomplete="off" checked>Map
 									</label>
