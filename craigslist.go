@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 type CraigslistCity struct {
@@ -101,10 +102,12 @@ func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
 			if got.Location == nil {
 				continue
 			}
+
+			timestamp := got.PostedAt.Format(time.Stamp)
 			results = append(results, SearchResult{
 				Vendor:      "Craigslist",
 				Title:       got.Title,
-				Posted:      got.PostedAt,
+				Posted:      timestamp,
 				Price:       strconv.Itoa(got.Price),
 				Latitude:    got.Location.Lat,
 				Longitude:   got.Location.Lng,

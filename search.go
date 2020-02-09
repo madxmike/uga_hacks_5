@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 )
 
 type SearchHandler struct {
@@ -22,14 +21,14 @@ type searchOptions struct {
 }
 
 type SearchResult struct {
-	Vendor      string     `json:"vendor"`
-	Title       string     `json:"title"`
-	Posted      *time.Time `json:"posted"`
-	Price       string     `json:"price"`
-	Latitude    float64    `json:"latitude"`
-	Longitude   float64    `json:"longitude"`
-	Description string     `json:"description"`
-	URL         string     `json:"url"`
+	Vendor      string  `json:"vendor"`
+	Title       string  `json:"title"`
+	Posted      string  `json:"posted"`
+	Price       string  `json:"price"`
+	Latitude    float64 `json:"latitude"`
+	Longitude   float64 `json:"longitude"`
+	Description string  `json:"description"`
+	URL         string  `json:"url"`
 }
 
 func (h *SearchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {

@@ -7,7 +7,6 @@ let map = L.map('mapid', {
 }).setView([33.7490, -84.3880], 11);
 
 L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     subdomains:['mt0','mt1','mt2','mt3']
 }).addTo(map);
 
@@ -16,17 +15,15 @@ let platform = new H.service.Platform({
   });
 
 map.on('popupopen', function(e) {
-    console.log("open")
     var elements = document.querySelectorAll(".leaflet-tile-container,.leaflet-marker-pane", );
-    var blured = Array.prototype.filter.call(elements, function(element){
+    Array.prototype.filter.call(elements, function(element){
         return element.style.filter = "blur(2px)"
     });
 });
 
 map.on('popupclose', function(e) {
-    console.log("close")
     var elements = document.querySelectorAll(".leaflet-tile-container,.leaflet-marker-pane", );
-    var blured = Array.prototype.filter.call(elements, function(element){
+    Array.prototype.filter.call(elements, function(element){
         return element.style.filter = "blur(0px)"
     });
 });
@@ -85,18 +82,10 @@ search.onsubmit = async (e) => {
     
   };//onSubmit
   
-  function setLoc(result, address) {
-      
+  function setLoc(result) {
         let lat = result.response.view[0].result[0].location.displayPosition.latitude;
         let lng = result.response.view[0].result[0].location.displayPosition.longitude;
         latlng = L.latLng(lat, lng);
-      
-        
-      
-    
-    
-    
-    
   }//setloc
   
   function setDefaults(form){
@@ -106,7 +95,7 @@ search.onsubmit = async (e) => {
     if (form.get("price_max") === "") {
         form.set("price_max", "1000")
     }
-    if(form.get("maxDistance") == ""){
+    if(form.get("maxDistance") === ""){
         form.set("maxDistance", 40);
     }
   }//setDefaults
