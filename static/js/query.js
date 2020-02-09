@@ -29,14 +29,16 @@ map.on('popupclose', function(e) {
 });
 
 document.getElementById("map").onclick = function () {
-    document.getElementById("list-container").style.display = "none";
+    $("#list-container").removeClass("d-flex")
+    $("#list-container").addClass("d-none")
+
 
     document.getElementById("map-container").style.display = "block";
 
 };
 document.getElementById("grid").onclick = function () {
-    document.getElementById("list-container").style.display = "block";
-
+    $("#list-container").removeClass("d-none")
+    $("#list-container").addClass("d-flex")
     document.getElementById("map-container").style.display = "none";
 };
 
