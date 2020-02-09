@@ -141,7 +141,6 @@ search.onsubmit = async (e) => {
         elem.getElementById("Posted").innerHTML = mapItem.posted;
         elem.getElementById("Link").href = mapItem.url;
         elem.getElementById("Description").innerHTML = mapItem.description;
-        
         let loc = L.latLng(mapItem.latitude, mapItem.longitude);
         let listing = L.marker()
         .bindPopup(elem.getElementById("body"), {maxWidth: 700, maxHeight: 500})

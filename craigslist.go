@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -100,6 +101,10 @@ func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
 				continue
 			}
 			if got.Location == nil {
+				continue
+			}
+
+			if len(strings.Split(got.Description, " ")) > 500 {
 				continue
 			}
 
