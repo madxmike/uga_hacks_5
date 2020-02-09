@@ -23,5 +23,5 @@ func GetPort() string {
 		port = "3000"
 		fmt.Println("INFO: No PORT environment variable detected, defaulting to " + port)
 	}
-	return ":" + port
+	return port
 }
