@@ -17,6 +17,7 @@ body {
 
 }
 
+
 #box{
     position: relative;
     width: 100vw;
@@ -44,6 +45,11 @@ body {
   display: flex;
   min-height: 100%;
   flex-direction: column;
+}
+
+.main * {
+    margin: 1%;
+    padding: 1%;
 }
 
 input[type=number]::-webkit-inner-spin-button,
