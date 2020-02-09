@@ -59,7 +59,7 @@ search.onsubmit = async (e) => {
        let elem = domparser.parseFromString(popup_text,'text/html');
         elem.getElementById("Vendor").src = logo;
         elem.getElementById("Title").innerHTML = mapItem.title;
-        elem.getElementById("Price").innerHTML = mapItem.price;
+        elem.getElementById("Price").innerHTML = "$" + mapItem.price;
         elem.getElementById("Posted").innerHTML = mapItem.posted;
         elem.getElementById("Link").href = mapItem.url;
         elem.getElementById("Description").innerHTML = mapItem.description;
