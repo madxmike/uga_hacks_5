@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/madxmike/go-craigslist"
 	"github.com/pkg/errors"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -97,7 +96,6 @@ func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
 		for _, listing := range result.Listings {
 			got, err := craigslist.GetListing(listing.URL)
 			if err != nil {
-				log.Println(err)
 				continue
 			}
 			if got.Location == nil {
@@ -115,7 +113,5 @@ func (h *CraigslistHarvester) Harvest() ([]SearchResult, error) {
 			})
 		}
 	}
-	log.Println(len(results))
-
 	return results, nil
 }

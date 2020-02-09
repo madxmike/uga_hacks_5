@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -32,7 +31,6 @@ func TemplateLoader(path string, liveMode bool) func(next http.Handler) http.Han
 
 func ServeTemplate(name string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Println("serving " + name)
 		t, ok := r.Context().Value("template").(*template.Template)
 		if !ok {
 			http.Error(w, fmt.Sprintf("could not load template (%s) from context", name), http.StatusInternalServerError)

@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -36,14 +35,11 @@ type SearchResult struct {
 func (h *SearchHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	opts, err := h.parseForm(r)
 	if err != nil {
-		log.Println(err)
 		http.Error(w, err.Error(), http.StatusNotAcceptable)
 		return
 	}
 
 	harvesters := make([]Harvester, 0)
-
-	log.Println(opts.UseCraigslist)
 	if opts.UseCraigslist == "on" {
 		bounds, err := h.parseBounds(opts.Bounds)
 		if err != nil {
@@ -83,7 +79,6 @@ func (h *SearchHandler) parseForm(r *http.Request) (searchOptions, error) {
 	if err != nil {
 		return searchOptions, errors.Wrap(err, "could not parse form")
 	}
-	log.Printf("%+v\n", searchOptions)
 	return searchOptions, nil
 }
 
