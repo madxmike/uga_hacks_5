@@ -4,9 +4,9 @@
 	{{template "header"}}
     <body>
 		{{template "nav"}}
-		<div class="container-fluid" id="view-page">
-			<div class="row">
-				<div class="col-lg-2 col-md-4" id="sidebar">
+		<div class="container-fluid h-100" id="view-page">
+			<div class="row min-vh-100 vh-100">
+				<div class="col-lg-2 col-md-4 " id="sidebar">
 					<div class="container-fluid" id="sidebar-container">
 						<div class="row pt-3 pr-2 justify-content-center" id="sidebar-header">
 							<h4 class="row-12" id="sidebar-title">Filter Options</h4>
@@ -23,14 +23,14 @@
 										</div>
 									</div>
 									<div class="form-row" id="sources-row">
-										<h6 class="font-weight-bold" id="vendor-title">Choose Sources</h6>
+										<h6 class="font-weight-bold col-12" id="vendor-title">Choose Sources</h6>
 										<div class="custom-control custom-switch">
-											<input type="checkbox" class="custom-control-input" checked id="craigslistToggle" name="use_craigslist">
+											<input type="checkbox" class="custom-control-input col-12" checked id="craigslistToggle" name="use_craigslist">
 											<label class="custom-control-label active" for="craigslistToggle">Craigslist</label>
 										</div>
 									</div>
 									<div class="form-row mt-2" id="prices-row">
-										<h6 class="font-weight-bold" id="vendor-title">Pricing</h6>
+										<h6 class="font-weight-bold col-12" id="vendor-title">Pricing</h6>
 											<div class="input-group">
 												<div class="input-group-prepend">
 													<div class="input-group-text">$</div>
@@ -53,8 +53,10 @@
 						<div class="row" id="sidebar-footer"></div>
 					</div>
 				</div>
-				<div class="col-lg-10 col-md-8" id="map-container">
-					<div id="mapid"></div>
+				<div class="col-lg-10 col-md-8 mt-sm-2 mb-2 mt-mb-0 mt-lg-0 mb-lg-0 mr-lg-0 mr-sm-0 ml-sm-0 mr-md-0 mt-md-0 pl-0 pr-0" id="map-container">
+					<div class="h-100 d-flex flex-column">
+						<div class=" flex-grow-1" id="mapid"></div>
+					</div>
 				</div>
 			</div>
 		</div>
