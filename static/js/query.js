@@ -81,9 +81,9 @@ search.onsubmit = async (e) => {
         let loc = L.latLng(mapItem.latitude, mapItem.longitude);
         let listing = L.marker()
         .bindPopup(elem.getElementById("body"), {maxWidth: 700, maxHeight: 500})
+            .bindTooltip(mapItem.title)
         .setLatLng(loc)
         .addTo(markers);
-
     }
     markers.addTo(map);
     document.getElementById("spin").style.display = "none";
