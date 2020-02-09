@@ -8,6 +8,9 @@ L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3']
 }).addTo(map);
 let markers = L.layerGroup();
+let platform = new H.service.Platform({
+    'apikey': 'eaQF8vvay1leHY9YE66PJkFL3Fh4OwwECClcpFV760Y'
+  });
 map.on('popupopen', function(e) {
     console.log("open")
     var elements = document.querySelectorAll(".leaflet-tile-container,.leaflet-marker-pane", );
@@ -32,6 +35,7 @@ search.onsubmit = async (e) => {
     let form = new FormData(search);
     let priceMin = form.get("price_min")
     let priceMax = form.get("price_max")
+    let address = form.get("address");
     console.log(priceMin)
     console.log(priceMax)
     if (priceMin === "") {
