@@ -7,7 +7,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 let markers = L.layerGroup();
-
+let platform = new H.service.Platform({
+    'apikey': 'eaQF8vvay1leHY9YE66PJkFL3Fh4OwwECClcpFV760Y'
+  });
 
 search.onsubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +19,7 @@ search.onsubmit = async (e) => {
     let form = new FormData(search);
     let priceMin = form.get("price_min")
     let priceMax = form.get("price_max")
+    let address = form.get("address");
     console.log(priceMin)
     console.log(priceMax)
     if (priceMin === "") {
