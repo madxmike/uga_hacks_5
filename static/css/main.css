@@ -1,8 +1,7 @@
-.body {
-    background-color: black;
-
+body {
+  background-color: black;
+  overflow-y: hidden;
 }
-
 #background {
     height: 100vh;
     width: 100%;
@@ -13,62 +12,44 @@
     background-size: cover;
     position: fixed;
     filter: blur(3px);
-    transform: scale(1.02);
+    transform: scale(1.1);
     z-index: -1;
 
 }
 
 
-
-.main{
-  display: grid;
-  grid-template-areas: 'cell_1 area_1 area_1'
-                       'track_1 track_1 track_1'
-                       'area_2 area_2 cell_2'
-                       'track_2 track_2 track_2';
-             
-  gap: 5pt;
+#yard{
+  color: #bcebd9;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 10em;
+  
 }
 
-.item1{ 
-  grid-area: cell_1;
-  text-align: center;
-}
-.item2{ 
-  grid-area: area_1; 
-  text-align: center;
-}
-.item3{ 
-  grid-area: track_1; 
-  text-align: center;
-}
-.item4{ 
-  grid-area: area_2; 
-  text-align: center;
-}
-.item5{ 
-  grid-area: cell_2; 
-  text-align: center;
-}
-.item6{ 
-  grid-area: track_2; 
-  text-align: center;
+ #box{
+  position: relative;
+  width: 100vw;
+  height: 25vh;
+
 }
 
 
-
-
-#view-page {
-  height: 100vh;
+#boxChild{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
 }
+
+#head{
+  text-align: center;
+  
+}
+
+
 
 #view-page .row {
   height: 100%;
-}
-
-#mapid {
-  height: 100%;
-  width: 100%;
 }
 
 .view {
@@ -76,7 +57,16 @@
   color: black;
 }
 
+#map-container {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+}
 
+.main * {
+    margin: 1%;
+    padding: 1%;
+}
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
