@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	go StartServer("3000")
+	go StartServer("80")
 
 	c := make(chan os.Signal, 2)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
