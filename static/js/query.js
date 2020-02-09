@@ -7,7 +7,21 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 let markers = L.layerGroup();
+map.on('popupopen', function(e) {
+    console.log("open")
+    var elements = document.querySelectorAll(".leaflet-tile-container,.leaflet-marker-pane", );
+    var blured = Array.prototype.filter.call(elements, function(element){
+        return element.style.filter = "blur(2px)"
+    });
+});
 
+map.on('popupclose', function(e) {
+    console.log("close")
+    var elements = document.querySelectorAll(".leaflet-tile-container,.leaflet-marker-pane", );
+    var blured = Array.prototype.filter.call(elements, function(element){
+        return element.style.filter = "blur(0px)"
+    });
+});
 
 search.onsubmit = async (e) => {
     e.preventDefault();
