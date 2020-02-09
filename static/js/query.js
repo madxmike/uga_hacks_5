@@ -33,10 +33,13 @@ map.on('popupclose', function(e) {
 
 document.getElementById("map").onclick = function () {
     document.getElementById("mapid").style.visibility = "visible";
+    document.getElementById("mapid").classList.remove("w-0");
     document.getElementById("list").style.visibility = "hidden";
+    
 };
 document.getElementById("grid").onclick = function () {
     document.getElementById("list").style.visibility = "visible";
+    document.getElementById("mapid").classList.add("w-0");
     document.getElementById("mapid").style.visibility = "hidden";
 };
 
@@ -157,7 +160,7 @@ search.onsubmit = async (e) => {
         .setLatLng(loc)
         .addTo(markers);
         
-        document.getElementById("list").innerHTML = elem.getElementById("body").outerHTML;
+        document.getElementById("list").append(elem.getElementById("body"));
         
      }
      markers.addTo(map);
